@@ -93,7 +93,7 @@ OPTION DATA EXAMPLE:
 """
 
 
-class TxtProcessor:
+class OutputProcessor:
     def __init__(self, home_path: str) -> None:
         self.__home_path = home_path
 
@@ -101,7 +101,7 @@ class TxtProcessor:
         self.output_data_files_names = []
 
     def collect_data(self, options_map: list, name: str):
-        grouped_by_calls_and_puts = self.grouping_by_calls_and_puts(
+        grouped_by_calls_and_puts = self.__grouping_by_calls_and_puts(
             options_map)
 
         if name not in self.options_store_key_name:
@@ -110,9 +110,16 @@ class TxtProcessor:
             self.options_store_key_name[name].update(grouped_by_calls_and_puts)
 
     def print(self):
-        self.update_menu_file()  # for other programs can navigate
-        self.sample_collected_data()  # deleting cases with no pair
+        self.__update_menu_file()  # for other programs can navigate
+        self.__sample_collected_data()  # deleting cases with no pair
 
+        self._push()
+
+    def clear_buffer(self):
+        self.options_store_key_name.clear()
+        self.output_data_files_names.clear()
+    
+    def _push(self):
         filenames = self.output_data_files_names
         options_store_keys_list = list(self.options_store_key_name.keys())
         if len(filenames) != len(options_store_keys_list):
@@ -122,10 +129,6 @@ class TxtProcessor:
         for filename, key_name in zip(filenames, options_store_keys_list):
             self.__print_by_name(filename, key_name)
 
-    def clear_buffer(self):
-        self.options_store_key_name.clear()
-        self.output_data_files_names.clear()
-
     def __print_by_name(self, filename, key_name):
 
         now = datetime.now()
@@ -133,7 +136,7 @@ class TxtProcessor:
 
         text_to_put = f"{current_time}\n"
         for symbol in self.options_store_key_name[key_name].keys():
-            text = self.parse_options_data_into_string(
+            text = self._parse_options_data_into_string(
                 self.options_store_key_name[key_name][symbol])
             text_to_put = f"{text_to_put}{text}\n"
 
@@ -145,7 +148,7 @@ class TxtProcessor:
         with open(name, "w", encoding="utf-8") as file:
             file.write(text_to_put)
 
-    def update_menu_file(self):
+    def __update_menu_file(self):
 
         path = f"{self.__home_path}menu.txt"
         names_for_storing_data_files = []
@@ -166,7 +169,7 @@ class TxtProcessor:
 
         self.output_data_files_names = names_for_storing_data_files
 
-    def sample_collected_data(self):
+    def __sample_collected_data(self):
         bad_symbols = []
         for name in self.options_store_key_name.keys():
             for symbol in self.options_store_key_name[name].keys():
@@ -184,7 +187,7 @@ class TxtProcessor:
                 else:
                     next
 
-    def grouping_by_calls_and_puts(self, options_map) -> dict:
+    def __grouping_by_calls_and_puts(self, options_map) -> dict:
         symbol_indexed_options = dict()
 
         for option in options_map:
@@ -199,7 +202,7 @@ class TxtProcessor:
 
         return symbol_indexed_options
 
-    def parse_options_data_into_string(self, option_data_ce_pe):
+    def _parse_options_data_into_string(self, option_data_ce_pe):
         pe_data = option_data_ce_pe['PE']
         ce_data = option_data_ce_pe['CE']
 

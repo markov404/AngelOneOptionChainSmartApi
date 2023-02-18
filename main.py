@@ -15,7 +15,7 @@ from components.utlis import (
 from components.smart_api_web_sock_v2 import SmartWebSocketV2
 from components.user import User
 from components.app import App
-from components.txt_processor import TxtProcessor
+from components.output_processor import OutputProcessor
 
 OUR_PATH = os.getcwd()
 
@@ -26,7 +26,7 @@ def get_data_using_socket(
         options_map: list,
         case_to_work: int,
         name: str,
-        OutputManager: TxtProcessor) -> None:
+        OutputManager: OutputProcessor) -> None:
 
     global cases_counter
     cases_counter = 0
@@ -82,7 +82,7 @@ def start_app(usr: User, api_key: str, options_map: list):
     option_names = make_option_names(options_map)
     dictionary_of_options = smart_sort(options_map, option_names)
 
-    OutputManager = TxtProcessor(f"{OUR_PATH}\\")
+    OutputManager = OutputProcessor(f"{OUR_PATH}\\")
 
     while True:
         for name_and_options in dictionary_of_options.items():

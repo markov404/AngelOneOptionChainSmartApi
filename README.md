@@ -7,6 +7,7 @@
 
 
 **Settings**
+
 For proper working of the programm, firstly you should create settings.txt file in root of programm.
 Fil it with format of example below:
 
@@ -15,6 +16,7 @@ Fil it with format of example below:
 You may change the way of programm getting settings by changing `InitSettings` class in settings.py module.
 
 **Using**
+
 After making settings.txt file you`ll start main.py and every 3 minutes you will have updated .txt files of OPTIDX data in root of your programm. Each file have time of last update in first row, and contains Expiry, LTP, Value, OI data.
 
 **Example of output data:**

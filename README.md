@@ -32,7 +32,7 @@ After making settings.txt file you`ll start main.py and every 3 minutes you will
 
 **Change the format of data**
 
-To change the format of saved data you have to go into txt_processor.py and change method 
+To change the format of saved data you have to go into output_processor.py and change method 
 parse_options_data_into_string. It gets python dictionary with format below:
 
     {
@@ -52,7 +52,7 @@ All the properties you can check in the SmartApi documentation in part about Web
 
 **Change the way programm saving data**
 
-To change the way programm saving option data you have to go into txt_processor.py and change method `_push` in it. This method is working with `options_store_key_name` dictionary where you have this structure:
+To change the way programm saving option data you have to go into output_processor.py and change method `_push` in it. This method is working with `options_store_key_name` dictionary where you have this structure:
 
     {
        "BANKNIFTY":{

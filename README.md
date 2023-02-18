@@ -1,6 +1,6 @@
 # OptionChain from AngelOne
 
-    This data is correct on 18.02.2023, SmartAPI MAY change their API.
+    This information is correct on 18.02.2023, SmartAPI MAY change their API.
 
 
 ## How to?
@@ -9,7 +9,7 @@
 **Settings**
 
 For proper working of the programm, firstly you should create settings.txt file in root of programm.
-Fil it with format of example below:
+Fill it with format of example below:
 
 > API_KEY:####;ID:####;PASSWORD:####;OTP_CODE:####
 
@@ -29,7 +29,9 @@ After making settings.txt file you`ll start main.py and every 3 minutes you will
 > 16FEB2023/600/1950/980.35/17050/0.05/232150/1356850
 
 ## Change the output format or way
+
 **Change the format of data**
+
 To change the format of saved data you have to go into txt_processor.py and change method 
 parse_options_data_into_string. It gets python dictionary with format below:
 
@@ -42,7 +44,7 @@ parse_options_data_into_string. It gets python dictionary with format below:
 CE is Call data; PE is Put data.
 Each have the dictionary of properties from Instrument list and WebSocket2.0 merged.
 Instrument List - https://smartapi.angelbroking.com/docs/Instruments
-WebSocket2.0 -  https://smartapi.angelbroking.com/docs/WebSocket2
+WebSocket2.0 - https://smartapi.angelbroking.com/docs/WebSocket2
 
 All the properties you can check in the SmartApi documentation in part about WebSocket2.0 (Snap Quote).
 

@@ -26,7 +26,8 @@ def get_data_using_socket(
         options_map: list,
         case_to_work: int,
         name: str,
-        OutputManager: OutputProcessor) -> None:
+        OutputManager: OutputProcessor,
+        chunk_id: int) -> None:
 
     global cases_counter
     cases_counter = 0
@@ -48,7 +49,7 @@ def get_data_using_socket(
             OutputManager.collect_data(options_map, name)
 
     def on_open(wsapp):
-        print("on open")
+        print(f"Opening socket [Chunk: {chunk_id + 1}, Option: {name}]")
         sws.subscribe(CORRELATION_ID, MODE, TOKENS_AND_PROPERTIES)
 
     def on_error(wsapp, error):
@@ -88,14 +89,15 @@ def start_app(usr: User, api_key: str, options_map: list):
         for name_and_options in dictionary_of_options.items():
             name = name_and_options[0]
             list_of_options_lists = name_and_options[1]
-            for option_list in list_of_options_lists:
+            for i, option_list in enumerate(list_of_options_lists):
                 get_data_using_socket(
                     usr,
                     api_key,
                     option_list,
                     len(option_list),
                     name,
-                    OutputManager)
+                    OutputManager,
+                    i)
 
         OutputManager.print()
         OutputManager.clear_buffer()

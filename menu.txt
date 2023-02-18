@@ -1,0 +1,4 @@
+BANKNIFTY_data.txt
+FINNIFTY_data.txt
+MIDCPNIFTY_data.txt
+NIFTY_data.txt

@@ -43,7 +43,9 @@ parse_options_data_into_string. It gets python dictionary with format below:
 
 CE is Call data; PE is Put data.
 Each have the dictionary of properties from Instrument list and WebSocket2.0 merged.
+
 Instrument List - https://smartapi.angelbroking.com/docs/Instruments
+
 WebSocket2.0 - https://smartapi.angelbroking.com/docs/WebSocket2
 
 All the properties you can check in the SmartApi documentation in part about WebSocket2.0 (Snap Quote).

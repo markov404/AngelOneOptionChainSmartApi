@@ -1,10 +1,6 @@
 name: CI
-
 run-name: Id ${{ github.run_id }} by ${{ github.actor }}
-on:
-  push:
-    branches:
-      - master
+on: [push]
 jobs:
   passing_tests:
     runs-on: ubuntu-latest

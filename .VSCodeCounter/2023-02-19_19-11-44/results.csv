@@ -1,0 +1,16 @@
+"filename", "language", "Python", "Markdown", "YAML", "comment", "blank", "total"
+"e:\projects\venv\Scripts\work\AngeloneAppV2\.github\workflows\github-actions-demo.yml", "YAML", 0, 0, 16, 0, 0, 16
+"e:\projects\venv\Scripts\work\AngeloneAppV2\README.md", "Markdown", 0, 54, 0, 0, 24, 78
+"e:\projects\venv\Scripts\work\AngeloneAppV2\__init__.py", "Python", 0, 0, 0, 0, 1, 1
+"e:\projects\venv\Scripts\work\AngeloneAppV2\components\__init__.py", "Python", 0, 0, 0, 0, 1, 1
+"e:\projects\venv\Scripts\work\AngeloneAppV2\components\app.py", "Python", 45, 0, 0, 0, 15, 60
+"e:\projects\venv\Scripts\work\AngeloneAppV2\components\output_processor.py", "Python", 180, 0, 0, 91, 45, 316
+"e:\projects\venv\Scripts\work\AngeloneAppV2\components\smart_api_web_sock_v2.py", "Python", 257, 0, 0, 146, 58, 461
+"e:\projects\venv\Scripts\work\AngeloneAppV2\components\user.py", "Python", 30, 0, 0, 6, 14, 50
+"e:\projects\venv\Scripts\work\AngeloneAppV2\components\utlis.py", "Python", 45, 0, 0, 1, 19, 65
+"e:\projects\venv\Scripts\work\AngeloneAppV2\main.py", "Python", 109, 0, 0, 0, 34, 143
+"e:\projects\venv\Scripts\work\AngeloneAppV2\settings.py", "Python", 19, 0, 0, 0, 8, 27
+"e:\projects\venv\Scripts\work\AngeloneAppV2\tests\__init__.py", "Python", 0, 0, 0, 0, 1, 1
+"e:\projects\venv\Scripts\work\AngeloneAppV2\tests\test_output_proc.py", "Python", 295, 0, 0, 1, 37, 333
+"e:\projects\venv\Scripts\work\AngeloneAppV2\tests\test_utils.py", "Python", 92, 0, 0, 4, 29, 125
+"Total", "-", 1072, 54, 16, 249, 286, 1677

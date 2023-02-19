@@ -13,4 +13,6 @@ jobs:
       - name: Intalling requirements
         run: pip install -r requirements.txt
       - name: Testing
-        run: pytest 
+        run: pytest
+      - name: Formation code
+        run: autopep8 --in-place --aggressive --aggressive --aggressive --recursive .

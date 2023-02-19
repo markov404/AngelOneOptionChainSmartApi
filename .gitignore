@@ -3,3 +3,4 @@ settings.txt
 unnamed.ico
 /output
 *.txt
+__pycache__

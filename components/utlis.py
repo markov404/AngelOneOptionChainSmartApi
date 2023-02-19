@@ -22,7 +22,10 @@ def sort_by_name_of_option_and_split_result_on_chunks(
 def make_token_list_for_web_socket(options_map: list) -> list:
     token_list = []
     for opt in options_map:
-        token_list.append(opt['token'])
+        try:
+            token_list.append(str(opt['token']))
+        except BaseException:
+            next
 
     return token_list
 
@@ -30,8 +33,14 @@ def make_token_list_for_web_socket(options_map: list) -> list:
 def make_set_of_option_names(options_map: list) -> set:
     set_of_names = set()
     for option in options_map:
-        if option['name'] not in set_of_names:
-            set_of_names.add(option['name'])
+        try:
+            st_one = (option['name'] not in set_of_names)
+            st_two = (option['name'] != '')
+            st_three = (isinstance(option['name'], str))
+            if st_one and st_two and st_three:
+                set_of_names.add(option['name'])
+        except BaseException:
+            next
 
     return set_of_names
 

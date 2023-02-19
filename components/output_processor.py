@@ -1,5 +1,6 @@
 
 from datetime import datetime
+from schema import Schema, Optional, And
 
 """
 OPTION DATA EXAMPLE:
@@ -94,13 +95,64 @@ OPTION DATA EXAMPLE:
 
 
 class OutputProcessor:
+    options_store_key_name_SCHEMA = Schema(
+        {
+            str: {
+                str: {
+                    And(str, lambda s: (s == 'CE' or s == 'PE')): dict
+                }
+            }
+        }
+    )
+
+    options_map_SCHEMA = Schema([{
+        'token': str,
+        'symbol': str,
+        'name': str,
+        'expiry': str,
+        'strike': str,
+        'lotsize': str,
+        'instrumenttype': str,
+        'exch_seg': str,
+        'tick_size': str,
+        'subscription_mode': int,
+        'exchange_type': int,
+        'sequence_number': int,
+        'exchange_timestamp': int,
+        'last_traded_price': int,
+        'subscription_mode_val': str,
+        'last_traded_quantity': int,
+        'average_traded_price': int,
+        'volume_trade_for_the_day': int,
+        'total_buy_quantity': float,
+        'total_sell_quantity': float,
+        'open_price_of_the_day': int,
+        'high_price_of_the_day': int,
+        'low_price_of_the_day': int,
+        'closed_price': int,
+        'last_traded_timestamp': int,
+        'open_interest': int,
+        'open_interest_change_percentage': int,
+        'upper_circuit_limit': int,
+        'lower_circuit_limit': int,
+        '52_week_high_price': int,
+        '52_week_low_price': int,
+        'best_5_buy_data': list,
+        'best_5_sell_data': list
+    }])
+
     def __init__(self, home_path: str) -> None:
         self.__home_path = home_path
 
         self.options_store_key_name = dict()
         self.output_data_files_names = []
 
-    def collect_data(self, options_map: list, name: str):
+    def collect_data(self, options_map: list, name: str) -> None:
+        try:
+            self.options_map_SCHEMA.validate(options_map)
+        except Exception as E:
+            raise E
+
         grouped_by_calls_and_puts = self.__grouping_by_calls_and_puts(
             options_map)
 
@@ -109,17 +161,17 @@ class OutputProcessor:
         else:
             self.options_store_key_name[name].update(grouped_by_calls_and_puts)
 
-    def print(self):
-        self.__update_menu_file()  # for other programs can navigate
+    def print(self) -> None:
+        self.__update_menu_file()  # for other programs navigation
         self.__sample_collected_data()  # deleting cases with no pair
 
         self._push()
 
-    def clear_buffer(self):
+    def clear_buffer(self) -> None:
         self.options_store_key_name.clear()
         self.output_data_files_names.clear()
-    
-    def _push(self):
+
+    def _push(self) -> None:
         filenames = self.output_data_files_names
         options_store_keys_list = list(self.options_store_key_name.keys())
         if len(filenames) != len(options_store_keys_list):
@@ -129,7 +181,7 @@ class OutputProcessor:
         for filename, key_name in zip(filenames, options_store_keys_list):
             self.__print_by_name(filename, key_name)
 
-    def __print_by_name(self, filename, key_name):
+    def __print_by_name(self, filename, key_name) -> None:
 
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
@@ -148,7 +200,7 @@ class OutputProcessor:
         with open(name, "w", encoding="utf-8") as file:
             file.write(text_to_put)
 
-    def __update_menu_file(self):
+    def __update_menu_file(self) -> None:
 
         path = f"{self.__home_path}menu.txt"
         names_for_storing_data_files = []
@@ -169,7 +221,13 @@ class OutputProcessor:
 
         self.output_data_files_names = names_for_storing_data_files
 
-    def __sample_collected_data(self):
+    def __sample_collected_data(self) -> None:
+        try:
+            self.options_store_key_name_SCHEMA.validate(
+                self.options_store_key_name)
+        except Exception as E:
+            raise Exception
+
         bad_symbols = []
         for name in self.options_store_key_name.keys():
             for symbol in self.options_store_key_name[name].keys():
@@ -194,6 +252,9 @@ class OutputProcessor:
             symbol_full = option['symbol']
             symbol = symbol_full[:len(symbol_full) - 2]
             ce_or_pe_part = symbol_full[len(symbol_full) - 2:]
+            if ce_or_pe_part != 'CE' and ce_or_pe_part != 'PE':
+                raise Exception(
+                    f'{self.__grouping_by_calls_and_puts} get Invalid symbol for option...')
 
             if symbol in symbol_indexed_options:
                 symbol_indexed_options[symbol].update({ce_or_pe_part: option})
@@ -202,20 +263,53 @@ class OutputProcessor:
 
         return symbol_indexed_options
 
-    def _parse_options_data_into_string(self, option_data_ce_pe):
+    def _parse_options_data_into_string(self, option_data_ce_pe: dict) -> str:
         pe_data = option_data_ce_pe['PE']
         ce_data = option_data_ce_pe['CE']
 
-        expiry = pe_data['expiry']
-        strike = pe_data['strike'][:5]
+        try:
+            ce_data['last_traded_price'] = str(
+                ce_data['last_traded_price'] / 100)
+            pe_data['last_traded_price'] = str(
+                pe_data['last_traded_price'] / 100)
+        except BaseException:
+            pass
 
-        ce_ltp = str(ce_data['last_traded_price'] / 100)
-        ce_volume = ce_data['volume_trade_for_the_day']
-        ce_oi = ce_data['open_interest']
+        try:
+            expiry = pe_data['expiry']
+            strike = pe_data['strike'][:5]
+        except BaseException:
+            pass
 
-        pe_ltp = str(pe_data['last_traded_price'] / 100)
-        pe_volume = pe_data['volume_trade_for_the_day']
-        pe_oi = pe_data['open_interest']
+        try:
+            output = f"expiry:{expiry}/strike:{strike}/"
+        except BaseException:
+            pass
 
-        output = f"{expiry}/{ce_volume}/{ce_oi}/{ce_ltp}/{strike}/{pe_ltp}/{pe_oi}/{pe_volume}"
+        list_of_unnecesary_keys = ['expiry', 'strike', 'best_5_buy_data']
+        for item in ce_data.items():
+            key = item[0]
+            value = item[1]
+            if key not in list_of_unnecesary_keys:
+                output += f"{key}:{value}/"
+
+        for item in pe_data.items():
+            key = item[0]
+            value = item[1]
+            if key not in list_of_unnecesary_keys:
+                output += f"{key}:{value}/"
+
+        return output[:len(output) - 1]
+
+    """FOR TEST:"""
+
+    def _test_grouping_by_ce_pe(self, data: dict) -> dict:
+        return self.__grouping_by_calls_and_puts(data)
+
+    def _test_sample_data(self, data):
+        self.options_store_key_name = data
+        self.__sample_collected_data()
+        
+        output = self.options_store_key_name
+        del self.options_store_key_name
         return output

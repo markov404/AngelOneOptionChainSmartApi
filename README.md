@@ -17,16 +17,14 @@ You may change the way of programm getting settings by changing `InitSettings` c
 
 **Using**
 
-After making settings.txt file you`ll start main.py and every 3 minutes you will have updated .txt files of OPTIDX data in root of your programm. Each file have time of last update in first row, and contains Expiry, LTP, Value, OI data.
+After making settings.txt file you`ll start main.py and every 3 minutes you will have updated .txt files of OPTIDX data in root of your programm. Each file have time of last update in first row, and contains all data provided about option.
 
 **Example of output data:**
 
-> 19:45:32 09MAR2023/1350/700/210.35/18050/606.3/1900/0
-> 29MAR2023/22400/108000/569.45/17700/115.0/523500/696700
-> 16FEB2023/4650450/364150/0.05/18550/514.7/2500/21250
-> 09MAR2023/0/50/603.25/17400/28.7/21050/20500
-> 30DEC2027/0/1673375/6285.7/18000/1620.0/150/0
-> 16FEB2023/600/1950/980.35/17050/0.05/232150/1356850
+> 19:45:32 
+> key:value/key:value/key:value/.../key:value
+> key:value/key:value/.../key:value/key:value
+> key:value/.../key:value/key:value/key:value
 
 ## Change the output format or way
 

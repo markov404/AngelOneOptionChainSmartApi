@@ -21,10 +21,10 @@ After making settings.txt file you`ll start main.py and every 3 minutes you will
 
 **Example of output data:**
 
-> 19:45:32
-> key:value/key:value/key:value/.../key:value
-> key:value/key:value/.../key:value/key:value
-> key:value/.../key:value/key:value/key:value
+> 19:45:32 <br />
+> key:value/key:value/key:value/.../key:value <br />
+> key:value/key:value/.../key:value/key:value <br />
+> key:value/.../key:value/key:value/key:value <br />
 
 ## Change the output format or way
 
